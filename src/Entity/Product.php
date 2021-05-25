@@ -32,7 +32,7 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="text", nullable=true, lenght=4000)
+     * @ORM\Column(type="text", nullable=true, length=4000)
      * @Assert\Length(max=4000, maxMessage="The description field cannot be longer than {{ limit }} characters.")
      */
     private $description;
