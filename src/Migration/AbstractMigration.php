@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Migration;
 
-use Doctrine\Migrations\AbstractMigration;
+use Doctrine\Migrations\AbstractMigration as DoctrineMigration;
 
-abstract class BaseMigration extends AbstractMigration {
+abstract class AbstractMigration extends DoctrineMigration {
     protected $dbEngine = 'mysql';
     protected $errorMessage = 'Migration can only be executed safely on \'%s\'.';
 

@@ -46,10 +46,9 @@ class Product
     private $stock;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tag::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="products")
      */
-    private $tag;
+    private $tags;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"})
@@ -59,6 +58,7 @@ class Product
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,14 +114,35 @@ class Product
         return $this;
     }
 
-    public function getTag(): ?Tag
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
     {
-        return $this->tag;
+        return $this->tags;
     }
 
-    public function setTag(?Tag $tag): self
+    public function addTag(Tag $tag): self
     {
-        $this->tag = $tag;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function addTags(array $tags): self
+    {
+        foreach ($tags as $tag) {
+            $this->addTag($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

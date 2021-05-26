@@ -27,7 +27,7 @@ class Tag
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="tag")
+     * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="tags")
      */
     private $products;
 
@@ -52,27 +52,28 @@ class Tag
         return $this;
     }
 
-    public function getProducts(): Collection {
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
+    public function addProduct(Pproduct $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setTag2($this);
+            $product->addTag($this);
         }
 
         return $this;
     }
 
-    public function removeProduct(Product $product): self
+    public function removeProduct(Pproduct $product): self
     {
         if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getTag2() === $this) {
-                $product->setTag2(null);
-            }
+            $product->removeTag($this);
         }
 
         return $this;
