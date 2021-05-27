@@ -165,6 +165,15 @@ class Product
         return $this;
     }
 
+    public function addImages(Collection $images): self
+    {
+        foreach ($images as $image) {
+            $this->addImage($image);
+        }
+
+        return $this;
+    }
+
     public function removeImage(Image $image): self
     {
         if ($this->images->removeElement($image)) {
