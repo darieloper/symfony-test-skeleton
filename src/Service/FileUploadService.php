@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -22,7 +23,7 @@ class FileUploadService implements FileUploadServiceInterface
         $image = new Image();
         $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
         $image->setPath($this->uploadDir . '/' . $fileName)
-            ->setName($file->getFilename());
+            ->setName($file->getClientOriginalName());
 
         if (isset($title)) {
             $image->setTitle($title);
@@ -40,9 +41,16 @@ class FileUploadService implements FileUploadServiceInterface
     public function multipleUpload(array $data): Collection {
         $images = new ArrayCollection();
         foreach ($data as $fileData) {
-            $images->add($this->upload($fileData['file'], $fileData['title']));
+            if (!isset($fileData['file'])) {
+                continue;
+            }
+            $images->add($this->upload($fileData['file'], $fileData['title'] ?? null));
         }
 
         return $images;
+    }
+
+    public function getUploadDir() {
+        return $this->absolutePath;
     }
 }

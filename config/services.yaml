@@ -28,6 +28,7 @@ services:
         tags: ['controller.service_arguments']
 
     App\Service\FileUploadService:
+        public: true
         arguments: [ '%kernel.project_dir%/public/%app.upload_dir%', '%app.upload_dir%' ]
 
     App\Service\FileUploadServiceInterface: '@App\Service\FileUploadService'
