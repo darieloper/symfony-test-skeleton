@@ -46,12 +46,12 @@ class Product
     private $stock;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="products")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      */
     private $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist", "remove"})
      */
     private $images;
 
@@ -131,18 +131,11 @@ class Product
         return $this;
     }
 
-    public function addTags(array $tags): self
-    {
-        foreach ($tags as $tag) {
-            $this->addTag($tag);
-        }
-
-        return $this;
-    }
-
     public function removeTag(Tag $tag): self
     {
-        $this->tags->removeElement($tag);
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
 
         return $this;
     }
@@ -160,15 +153,6 @@ class Product
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
             $image->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function addImages(Collection $images): self
-    {
-        foreach ($images as $image) {
-            $this->addImage($image);
         }
 
         return $this;

@@ -33,3 +33,14 @@ a.btn-dark, a.btn-dark:hover {
     background-color: #777;
     border-radius: 10px;
 }
+
+.select2-container--default .select2-selection--multiple {
+    border: 1px solid #ced4da !important;
+    padding-bottom: 12px !important;
+    padding-right: 12px !important;
+}
+
+ul.images {
+    list-style: none;
+    padding: 0px !important;
+}

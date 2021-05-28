@@ -2,12 +2,82 @@
 
 {% block title %}Edit Product{% endblock %}
 
-{% block body %}
-    <h1>Edit Product</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.0/viewer.css" integrity="sha512-HHYZlJVYgHVdz/pMWo63/ya7zc22sdXeqtNzv4Oz76V3gh7R+xPqbjNUp/NRmf0R85J++Yg6R0Kkmz+TGYHz8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
 
-    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+{% block containerTitle %}
+    <a class="btn btn-dark mr-2" href="{{ path('product_index') }}">Back</a> Edit Product
+{% endblock %}
 
-    <a href="{{ path('product_index') }}">back to list</a>
-
+{% block containerActions %}
     {{ include('product/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.0/viewer.min.js" integrity="sha512-0goo56vbVLOJt9J6TMouBm2uE+iPssyO+70sdrT+J5Xbb5LsdYs31Mvj4+LntfPuV+VlK0jcvcinWQG5Hs3pOg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        const gallery = new Viewer(document.getElementById('images'));
+
+        var $collectionHolder;
+
+        var $addImageButton = $('<button type="button" class="add_tag_link btn btn-info">Add a Image</button>');
+        var $newLinkLi = $('<li></li>').append($addImageButton);
+
+        function addTagForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+            newForm = newForm + '<button class="btn btn-danger removeImage mb-4">Delete Image</button>'
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            $('.removeImage').on('click', function () {
+                $(this).parents('li').remove();
+            })
+        }
+
+        $(document).ready(function() {
+            $('select').select2({width: 'resolve'});
+
+            $('.removePhoto').on('click', function () {
+                var id = $(this).parents('.rounded').find('img').data('id');
+                $(this).parents('.rounded').remove();
+                var removed = $('#product_removed');
+                removed.val(removed.val()+id+','); // Store all the photo that wants to remove
+            })
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('ul.images');
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find('input').length);
+
+            $addImageButton.on('click', function(e) {
+                // add a new tag form (see next code block)
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        });
+    </script>
 {% endblock %}

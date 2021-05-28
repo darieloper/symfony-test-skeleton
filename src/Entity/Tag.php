@@ -72,7 +72,8 @@ class Tag
 
     public function removeProduct(Product $product): self
     {
-        if ($this->products->removeElement($product)) {
+        if ($this->products->contains($product)) {
+            $this->products->removeElement($product);
             $product->removeTag($this);
         }
 

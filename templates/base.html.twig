@@ -22,14 +22,12 @@
             </div>
         {% endfor %}
 
-        <div class="row">
-            <div class="col-6">
-                <h1>{% block containerTitle %}{% endblock %}</h1>
-            </div>
-            <div class="col-6">
-                <div class="mt-2">
-                    {% block containerActions %}{% endblock %}
-                </div>
+        <div>
+            <div>
+                <h1>
+                    {% block containerTitle %}{% endblock %}
+                    <div class="float-right mb-2" style="width: 136px;">{% block containerActions %}{% endblock %}</div>
+                </h1>
             </div>
         </div>
 

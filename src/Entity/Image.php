@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -39,6 +41,16 @@ class Image
      * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="images")
      */
     private $product;
+
+    /**
+     * @var File
+     * @Assert\File(
+     *     maxSize="5M",
+     *     mimeTypes = {"image/gif", "image/jpeg", "image/x-png"},
+     *     mimeTypesMessage = "Please upload a valid Image File"
+     * )
+     */
+    private $file;
 
     public function getId(): ?int
     {
@@ -89,6 +101,16 @@ class Image
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getFile(): ?File {
+        return $this->file;
+    }
+
+    public function setFile(File $file): self {
+        $this->file = $file;
 
         return $this;
     }
