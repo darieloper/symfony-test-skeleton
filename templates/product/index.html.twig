@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/datatables.min.css" />
+{% endblock %}
+
+{% block containerTitle 'Products' %}
+
+{% block containerActions %}
+    <a href="{{ path('product_new') }}" class="btn btn-success float-right mt-4">Create new</a>
+{% endblock %}
+
+{% block body %}
+    {% embed '_partials/table.html.twig' with {records: products, noSort: '3,5', filterBy: '1,2,3,4'} %}
+        {% block thead %}
+            <th>Title</th>
+            <th>Price</th>
+            <th>Tags</th>
+            <th>Stock</th>
+        {% endblock %}
+
+        {% block tbody %}
+            <td>{{ record.title }}</td>
+            <td>{{ record.price }}</td>
+            <td>
+                {% for tag in record.tags %}
+                    <span class="badge badge-info mr-1"> {{ tag.name }}</span>
+                {% else %}
+                    <span class="text-center">No Tags</span>
+                {% endfor %}
+            </td>
+            <td>{{ record.stock }}</td>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+    {{  parent() }}
+    <script src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
+{% endblock %}
+

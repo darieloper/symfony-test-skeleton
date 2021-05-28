@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block body %}
-    {% embed '_partials/table.html.twig' with {records: tags} %}
+    {% embed '_partials/table.html.twig' with {records: tags, noSort: '2', filterBy: '1'} %}
     {% block thead %}
         <th>Name</th>
     {% endblock %}
@@ -29,5 +29,5 @@
     {{  parent() }}
     <script src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/datatables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
-    <script src="{{ asset('js/tag.js') }}"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
 {% endblock %}

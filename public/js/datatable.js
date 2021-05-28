@@ -1,10 +1,12 @@
 $(document).ready(function() {
     var dataSrc = [];
+    var targets = ($('#table').data('no-sort') || '').toString().split(',').map(item => parseInt(item));
+    var columnsToFilter = ($('#table').data('filter') || '').toString().split(',').map(item => parseInt(item));
 
     $('#table').DataTable({
         columnDefs: [
             {
-                targets: 2,
+                targets: targets,
                 orderable: false,
                 className: 'text-center'
             }
@@ -14,7 +16,7 @@ $(document).ready(function() {
 
             // Populate a dataset for autocomplete functionality
             // using data from first, second and third columns
-            api.cells('tr', [1]).every(function(){
+            api.cells('tr', columnsToFilter).every(function(){
                 // Get cell data as plain text
                 var data = $('<div>').html(this.data()).text();
                 if(dataSrc.indexOf(data) === -1){ dataSrc.push(data); }

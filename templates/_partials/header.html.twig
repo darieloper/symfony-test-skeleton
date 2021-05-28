@@ -9,7 +9,7 @@
             {%
                 set pages = [
                 {'label': 'Home', 'url': path('home'), 'basePath': '/home'},
-                {'label': 'Products', 'url': '#', 'basePath': '/product'},
+                {'label': 'Products', 'url': path('product_index'), 'basePath': '/product'},
                 {'label': 'Tags', 'url': path('tag_index'), 'basePath': '/tag'}]
             %}
             {% for page in pages %}
