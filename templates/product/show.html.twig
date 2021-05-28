@@ -2,9 +2,21 @@
 
 {% block title %}Product{% endblock %}
 
-{% block body %}
-    <h1>Product</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.0/viewer.css" integrity="sha512-HHYZlJVYgHVdz/pMWo63/ya7zc22sdXeqtNzv4Oz76V3gh7R+xPqbjNUp/NRmf0R85J++Yg6R0Kkmz+TGYHz8g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
 
+{% block containerTitle %}
+    <a class="btn btn-dark mr-2" href="{{ path('product_index') }}">Back</a> Products
+{% endblock %}
+
+{% block containerActions %}
+    {{ include('product/_delete_form.html.twig') }}
+    <a class="btn btn-primary float-right mr-1" href="{{ path('product_edit', {'id': product.id}) }}">Edit</a>
+{% endblock %}
+
+{% block body %}
     <table class="table">
         <tbody>
             <tr>
@@ -17,22 +29,46 @@
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ product.price }}</td>
+                <td>{{ product.price|number_format(2, '.', ',') }}</td>
             </tr>
             <tr>
                 <th>Description</th>
                 <td>{{ product.description }}</td>
             </tr>
             <tr>
+                <th>Tags</th>
+                <td>
+                    {% for tag in product.tags %}
+                        <a href="{{ path('tag_show', {id: tag.id}) }}"><span class="badge badge-info mr-1"> {{ tag.name }}</span></a>
+                    {% else %}
+                        <span class="text-center">No Tags</span>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Stock</th>
                 <td>{{ product.stock }}</td>
             </tr>
+            <tr>
+                <th>Images</th>
+                <td>
+                    <div id="images">
+                        {% for image in product.images %}
+                            <img class="rounded mr-3" alt="{{ image.title }}" title="{{ image.title }}" width="100" height="100" src="{{ asset(image.path) }}" />
+                        {% else %}
+                            <span class="text-center">No Images</span>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
+{% endblock %}
 
-    <a href="{{ path('product_index') }}">back to list</a>
-
-    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
-
-    {{ include('product/_delete_form.html.twig') }}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.9.0/viewer.min.js" integrity="sha512-0goo56vbVLOJt9J6TMouBm2uE+iPssyO+70sdrT+J5Xbb5LsdYs31Mvj4+LntfPuV+VlK0jcvcinWQG5Hs3pOg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const gallery = new Viewer(document.getElementById('images'));
+    </script>
 {% endblock %}

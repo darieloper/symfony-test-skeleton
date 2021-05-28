@@ -24,10 +24,10 @@
 
         {% block tbody %}
             <td>{{ record.title }}</td>
-            <td>{{ record.price }}</td>
+            <td>{{ record.price|number_format(2, '.', ',') }}</td>
             <td>
                 {% for tag in record.tags %}
-                    <span class="badge badge-info mr-1"> {{ tag.name }}</span>
+                    <a href="{{ path('tag_show', {id: tag.id}) }}"><span class="badge badge-info mr-1"> {{ tag.name }}</span></a>
                 {% else %}
                     <span class="text-center">No Tags</span>
                 {% endfor %}
