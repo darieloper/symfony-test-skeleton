@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tag{% endblock %}
+
+{% block containerTitle %}
+    <a class="btn btn-dark mr-2" href="{{ path('tag_index') }}">Back</a> Edit Tag
+{% endblock %}
+
+{% block containerActions %}
+    {{ include('tag/_delete_form.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    {{ include('tag/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

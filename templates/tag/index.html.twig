@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tags{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/datatables.min.css" />
+{% endblock %}
+
+{% block containerTitle 'Tags' %}
+
+{% block containerActions %}
+    <a href="{{ path('tag_new') }}" class="btn btn-success float-right mt-4">Create new</a>
+{% endblock %}
+
+{% block body %}
+    {% embed '_partials/table.html.twig' with {records: tags} %}
+    {% block thead %}
+        <th>Name</th>
+    {% endblock %}
+
+    {% block tbody %}
+        <td>{{ record.name }}</td>
+    {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+    {{  parent() }}
+    <script src="https://cdn.datatables.net/v/bs-3.3.7/dt-1.10.15/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.js"></script>
+    <script src="{{ asset('js/tag.js') }}"></script>
+{% endblock %}

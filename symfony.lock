@@ -221,6 +221,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/asset": {
+        "version": "v3.4.47"
+    },
     "symfony/browser-kit": {
         "version": "v3.4.47"
     },

@@ -1,0 +1,20 @@
+a.btn-dark, a.btn-dark:hover {
+    color: #FFF !important;
+}
+
+.navbar {
+    border-radius: 0px !important;
+    font-size: 20px !important;
+    position: sticky !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+}
+
+.navbar-brand {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    font-size: 20px !important;
+}

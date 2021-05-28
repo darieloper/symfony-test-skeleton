@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tag{% endblock %}
+
+{% block containerTitle %}
+    <a class="btn btn-dark mr-2" href="{{ path('tag_index') }}">Back</a> Create New Tag
+{% endblock %}
+
+{% block body %}
+    {{ include('tag/_form.html.twig') }}
+{% endblock %}

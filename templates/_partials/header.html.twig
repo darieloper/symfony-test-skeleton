@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="#">Symfony Test</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {%
+                set pages = [
+                {'label': 'Home', 'url': path('home'), 'basePath': '/home'},
+                {'label': 'Products', 'url': '#', 'basePath': '/product'},
+                {'label': 'Tags', 'url': path('tag_index'), 'basePath': '/tag'}]
+            %}
+            {% for page in pages %}
+                <li class="{{ page.basePath in app.request.pathinfo ? 'nav-item active' : 'nav-item' }}">
+                    <a class="nav-link" href="{{ page.url }}">{{ page.label }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

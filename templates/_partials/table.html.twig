@@ -1,0 +1,28 @@
+<table id="table" class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            {% block thead %}{% endblock %}
+            {% block headActions %}<th>Actions</th>{% endblock %}
+        </tr>
+    </thead>
+    <tbody>
+    {% for record in records %}
+        <tr>
+            <td>{{ record.id }}</td>
+            {% block tbody %}{% endblock %}
+            {% block tbodyActions %}
+                {% include '_partials/table_actions.html.twig' with { model: record } %}
+            {% endblock %}
+        </tr>
+    {% else %}
+        <tr>
+            {% block noData %}
+                <td colspan="3">
+                    <span class="text-center">No records found</span>
+                </td>
+            {% endblock %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -60,7 +60,7 @@ class Tag
         return $this->products;
     }
 
-    public function addProduct(Pproduct $product): self
+    public function addProduct(Product $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
@@ -70,12 +70,16 @@ class Tag
         return $this;
     }
 
-    public function removeProduct(Pproduct $product): self
+    public function removeProduct(Product $product): self
     {
         if ($this->products->removeElement($product)) {
             $product->removeTag($this);
         }
 
         return $this;
+    }
+
+    public function __toString(): string {
+        return 'tag';
     }
 }
