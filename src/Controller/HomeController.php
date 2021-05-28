@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\TagRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,8 +20,9 @@ class HomeController extends Controller
     /**
      * @Route("/home", name="home")
      */
-    public function index(): Response
+    public function index(TagRepository $tagRepository): Response
     {
-        return $this->render('home/index.html.twig');
+        $mostUsedTags = $tagRepository->getMostUsed();
+        return $this->render('home/index.html.twig', compact('mostUsedTags'));
     }
 }

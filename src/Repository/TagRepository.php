@@ -13,4 +13,15 @@ use App\Entity\Tag;
 class TagRepository extends AbstractRepository
 {
     protected $entity = Tag::class;
+
+    public function getMostUsed() {
+        return $this->createQueryBuilder('t')
+            ->select('Count(t) as counter, t.name')
+            ->innerJoin('t.products', 'p')
+            ->groupBy('t.name')
+            ->orderBy('counter', 'desc')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
 }

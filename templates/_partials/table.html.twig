@@ -1,7 +1,9 @@
-<table id="table" class="table" data-no-sort="{{ noSort }}" data-filter="{{ filterBy }}">
+<table id="table" class="table" data-no-sort="{{ noSort is defined ? noSort : '' }}" data-filter="{{ filterBy }}">
     <thead>
         <tr>
-            <th>Id</th>
+            {% if noId is not defined %}
+                <th>Id</th>
+            {% endif %}
             {% block thead %}{% endblock %}
             {% block headActions %}<th>Actions</th>{% endblock %}
         </tr>
@@ -9,7 +11,9 @@
     <tbody>
     {% for record in records %}
         <tr>
-            <td>{{ record.id }}</td>
+            {% if noId is not defined %}
+                <td>{{ record.id }}</td>
+            {% endif %}
             {% block tbody %}{% endblock %}
             {% block tbodyActions %}
                 {% include '_partials/table_actions.html.twig' with { model: record } %}
